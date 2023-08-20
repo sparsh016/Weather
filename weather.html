@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Myweather-app</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <nav id="nav">
+        <div class="navTop">
+            <div class="navItem">
+                <h2>Weather.info</h2>
+                <!-- <img decoding="async" src="./img/sneakers.png" alt=""> -->
+            </div>
+            
+            <div class="navItem">
+                <span class="limitedOffer">LOGIN</span>
+                <span class="limitedOffer">/SIGNUP</span>
+            </div>
+        </div>
+        <div class="navBottom">
+            <h3 class="menuItem">HOME</h3>
+            <h3 class="menuItem">LOCATION</h3>
+            <h3 class="menuItem">CONTACT</h3>
+            <h3 class="menuItem">ABOUT US</h3>
+            <h3 class="menuItem">HELP</h3>
+        </div>
+    </nav>
+
+
+
+
+
+
+
+
+    <div class="card">
+        <div class="search">
+            <input type="text" placeholder="search city" spellcheck="false">
+        <button> <img src="weatherapp/images/search.png.png"></button>
+        </div>
+        <div class="weather">
+            <img src="weatherapp/images/rain.png"class="weather-icon">
+            <h1 class="temp"> 22°C</h1>
+            <h2 class="city">newYork</h2>
+       </div>
+       <div class="details">
+        <div class="col">
+            <img src="weatherapp/images/humidity.png">
+            <div>
+                <p class="humidity">50%</p>
+                <p> Humidity</p>
+            </div>
+        </div>
+        <div class="col">
+            
+            <div>
+                <p class="timezone">05:49am</p>
+                <p> time</p>
+            </div>
+        </div>
+        <div class="col">
+            <img src="weatherapp/images/wind.png">
+            <div>
+                <p class="wind speed">2 km/hr</p>
+                <p> wind speed</p>
+            </div>
+        </div>
+
+       </div>
+    </div>
+
+    <script>
+        const apiKey="199651216aa9860e0b8137cbf04c0077";
+        const apiUrl="https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
+        const searchBox = document.querySelector(".search input");
+        const searchBtn = document.querySelector(".search button");
+        const weatherIcon=document.querySelector(".weather-icon");
+
+        async function checkWeather(city)
+        {
+            const response = await fetch( apiUrl +city+ `&appid=${apiKey}`);
+            var data=await response.json();
+            console.log(data);
+            document.querySelector(".city").innerHTML=data.name;
+            document.querySelector(".temp").innerHTML= data.main.temp+"°C";
+            document.querySelector(".humidity").innerHTML=data.main.humidity+"%";
+            document.querySelector(".wind").innerHTML=data.wind.speed+"km/hr";
+            document.querySelector(".timezone").innerHTML=data.timezone;
+if(data.weather[0].main=="Clouds")
+{
+    weatherIcon.src="weatherapp/images/clouds.png";
+}
+else if(data.weather[0].main=="Drizzle")
+{
+    weatherIcon.src="weatherapp/images/drizzle.png";
+}
+ else if(data.weather[0].main=="Mist")
+{
+    weatherIcon.src="weatherapp/images/mist.png";
+}
+else if(data.weather[0].main=="Snow")
+{
+    weatherIcon.src="weatherapp/images/snow.png";
+}else if(data.weather[0].main=="Clear")
+{
+    weatherIcon.src="weatherapp/images/clear.png";
+}
+else if(data.weather[0].main=="Rain")
+{
+    weatherIcon.src="weatherapp/images/rain.png";
+}
+else if(data.weather[0].main=="Haze")
+{
+    weatherIcon.src="weatherapp/images/mist.png";
+}
+
+        }
+        searchBtn.addEventListener("click",()=>{checkWeather(searchBox.value);})
+        
+        </script>
+</body>
+</html>
